@@ -116,8 +116,7 @@ flush :: proc(io: ^IO) -> os.Errno {
 			return os.ERROR_NONE
 		}
 
-		ts: kqueue.Time_Spec
-		new_events, err := kqueue.kevent(io.kq, events[:change_events], events[:], &ts)
+		new_events, err := kqueue.kevent(io.kq, events[:change_events], events[:], nil)
 		if err != .None do return ev_err_to_os_err(err)
 
 		// PERF: this is ordered and O(N), can this be made unordered?
